@@ -1,35 +1,60 @@
-// Create a new SpeechRecognition object
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-recognition.interimResults = true;
+// Check if SpeechRecognition is supported
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
 
-recognition.addEventListener('result', e => {
-  const transcript = Array.from(e.results)
-    .map(result => result[0])
-    .map(result => result.transcript)
-    .join('');
+    recognition.onresult = function(event) {
+        var transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+        var audio = new Audio();
 
-  const words = {
-    'Samosa': 'audios/40.mp3',
-    'Biryani': 'audios/200.mp3',
-    'Vada Pav': 'audios/80.mp3',
-    'Pav Bhaji': 'audios/150.mp3',
-    'Chole Bhature': 'audios/180.mp3',
-    'Pani Puri': 'audios/50.mp3',
-    'Momos': 'audios/100.mp3',
-    'Chowmein': 'audios/150.mp3',
-    'Pizza': 'audios/200.mp3',
-    'Burger': 'audios/80.mp3',
-    'Yes': 'audios/placed.mp3',
-    'No': 'audios/cancelled.mp3'
-  };
+        switch (transcript) {
+            case 'samosa':
+                audio.src = '/audios/40.mp3';
+                break;
+            case 'biryani':
+                audio.src = '/audios/200.mp3';
+                break;
+            case 'vada pav':
+                audio.src = '/audios/80.mp3';
+                break;
+            case 'pav bhaji':
+                audio.src = '/audios/150.mp3';
+                break;
+            case 'chole bhature':
+                audio.src = '/audios/180.mp3';
+                break;
+            case 'pani puri':
+                audio.src = '/audios/50.mp3';
+                break;
+            case 'momos':
+                audio.src = '/audios/100.mp3';
+                break;
+            case 'chowmein':
+                audio.src = '/audios/150.mp3';
+                break;
+            case 'pizza':
+                audio.src = '/audios/200.mp3';
+                break;
+            case 'burger':
+                audio.src = '/audios/80.mp3';
+                break;
+            case 'yes':
+                audio.src = '/audios/placed.mp3';
+                break;
+            case 'no':
+                audio.src = '/audios/cancelled.mp3';
+                break;
+            default:
+                console.log('Command not recognized');
+        }
 
-  Object.keys(words).forEach(word => {
-    if (transcript.includes(word)) {
-      const audio = new Audio(words[word]);
-      audio.play();
-    }
-  });
-});
+        audio.play();
+    };
 
-recognition.start();
+    recognition.start();
+} else {
+    console.log('Speech Recognition API not supported');
+}
