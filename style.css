@@ -1,0 +1,33 @@
+
+body{
+    background-color: rgb(184, 221, 255);
+}
+
+#logo{
+    border-radius: 25px;
+}
+
+#name{
+    font-family: 'Fredoka', sans-serif;
+    font-size: 75px;
+}
+
+#items{
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+hr{
+    border-top: 10px solid black;
+}
+a{
+    cursor: pointer;
+}
+
+.foods{
+    margin: 50px;
+}
+
+.foods img{
+    border-radius: 20px;
+}
